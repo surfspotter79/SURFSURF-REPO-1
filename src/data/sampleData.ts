@@ -1,0 +1,121 @@
+import { Photo } from '../types';
+
+export const samplePhotos: Photo[] = [
+  {
+    id: '1',
+    title: 'Perfect Pipeline Barrel',
+    photographer: 'Alex Chen',
+    location: 'Pipeline, Hawaii',
+    date: '2024-01-15',
+    price: 40,
+    imageUrl: 'https://images.pexels.com/photos/416978/pexels-photo-416978.jpeg?auto=compress&cs=tinysrgb&w=800',
+    description: 'A stunning barrel shot at the legendary Pipeline break during a perfect winter swell.',
+    tags: ['barrel', 'pipeline', 'hawaii', 'surfing', 'waves'],
+    coordinates: { lat: 21.6619, lng: -158.0500 },
+    likes: 142
+  },
+  {
+    id: '2',
+    title: 'Golden Hour Surfing',
+    photographer: 'Maria Santos',
+    location: 'Gold Coast, Australia',
+    date: '2024-01-20',
+    price: 25,
+    imageUrl: 'https://images.pexels.com/photos/390051/surfer-wave-sunrise-surfing-390051.jpeg?auto=compress&cs=tinysrgb&w=800',
+    description: 'A beautiful golden hour capture of a surfer riding a perfect wave on the Gold Coast.',
+    tags: ['golden hour', 'australia', 'surfing', 'sunset'],
+    coordinates: { lat: -28.0167, lng: 153.4000 },
+    likes: 89
+  },
+  {
+    id: '3',
+    title: 'Big Wave Challenge',
+    photographer: 'Jake Thompson',
+    location: 'Mavericks, California',
+    date: '2024-01-10',
+    price: 60,
+    imageUrl: 'https://images.pexels.com/photos/1654698/pexels-photo-1654698.jpeg?auto=compress&cs=tinysrgb&w=800',
+    description: 'Massive waves at the infamous Mavericks break, showcasing the raw power of the ocean.',
+    tags: ['big waves', 'mavericks', 'california', 'extreme'],
+    coordinates: { lat: 37.4919, lng: -122.5019 },
+    likes: 203
+  },
+  {
+    id: '4',
+    title: 'Tropical Paradise',
+    photographer: 'Sophie Wilson',
+    location: 'Tavarua, Fiji',
+    date: '2024-01-25',
+    price: 35,
+    imageUrl: 'https://images.pexels.com/photos/1098365/pexels-photo-1098365.jpeg?auto=compress&cs=tinysrgb&w=800',
+    description: 'Crystal clear waters and perfect waves in the tropical paradise of Fiji.',
+    tags: ['fiji', 'tropical', 'clear water', 'paradise'],
+    coordinates: { lat: -17.8219, lng: 177.1219 },
+    likes: 156
+  },
+  {
+    id: '5',
+    title: 'Portuguese Perfection',
+    photographer: 'Carlos Rodriguez',
+    location: 'Ericeira, Portugal',
+    date: '2024-01-12',
+    price: 30,
+    imageUrl: 'https://images.pexels.com/photos/1654684/pexels-photo-1654684.jpeg?auto=compress&cs=tinysrgb&w=800',
+    description: 'The rugged coastline of Ericeira provides the perfect backdrop for this surf shot.',
+    tags: ['portugal', 'ericeira', 'coastline', 'atlantic'],
+    coordinates: { lat: 38.9638, lng: -9.4158 },
+    likes: 78
+  },
+  {
+    id: '6',
+    title: 'Balinese Beauty',
+    photographer: 'Alex Chen',
+    location: 'Uluwatu, Bali',
+    date: '2024-01-18',
+    price: 45,
+    imageUrl: 'https://images.pexels.com/photos/1654701/pexels-photo-1654701.jpeg?auto=compress&cs=tinysrgb&w=800',
+    description: 'The iconic surf break at Uluwatu Temple, where tradition meets modern surfing.',
+    tags: ['bali', 'uluwatu', 'temple', 'indonesia'],
+    coordinates: { lat: -8.8290, lng: 115.0840 },
+    likes: 134
+  },
+  {
+    id: '7',
+    title: 'South African Power',
+    photographer: 'Maria Santos',
+    location: 'Jeffreys Bay, South Africa',
+    date: '2024-01-22',
+    price: 38,
+    imageUrl: 'https://images.pexels.com/photos/1654686/pexels-photo-1654686.jpeg?auto=compress&cs=tinysrgb&w=800',
+    description: 'The legendary right-hand point break of Jeffreys Bay in all its glory.',
+    tags: ['south africa', 'jeffreys bay', 'point break', 'right-hand'],
+    coordinates: { lat: -34.0481, lng: 24.9090 },
+    likes: 97
+  },
+  {
+    id: '8',
+    title: 'Dawn Patrol',
+    photographer: 'Jake Thompson',
+    location: 'Pipeline, Hawaii',
+    date: '2024-01-08',
+    price: 42,
+    imageUrl: 'https://images.pexels.com/photos/1654697/pexels-photo-1654697.jpeg?auto=compress&cs=tinysrgb&w=800',
+    description: 'Early morning session at Pipeline, capturing the serene beauty before the crowds arrive.',
+    tags: ['dawn patrol', 'early morning', 'pipeline', 'peaceful'],
+    coordinates: { lat: 21.6619, lng: -158.0500 },
+    likes: 186
+  },
+  {
+    id: '9',
+    title: 'Sunset Session',
+    photographer: 'Sophie Wilson',
+    location: 'Gold Coast, Australia',
+    date: '2024-01-28',
+    price: 28,
+    imageUrl: 'https://images.pexels.com/photos/1654702/pexels-photo-1654702.jpeg?auto=compress&cs=tinysrgb&w=800',
+    description: 'A magical sunset session on the Gold Coast with perfect offshore winds.',
+    tags: ['sunset', 'gold coast', 'offshore', 'magic hour'],
+    coordinates: { lat: -28.0167, lng: 153.4000 },
+    likes: 112
+  }
+];
