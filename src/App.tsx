@@ -1,4 +1,4 @@
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics, track } from '@vercel/analytics/react';
 import React, { useState } from 'react';
 import { Camera, MapPin, Upload, Search, Filter, ShoppingCart, User, Waves as Wave } from 'lucide-react';
 import Navigation from './components/Navigation';
@@ -43,7 +43,6 @@ function App() {
     };
     
     setSurfSpots(prev => [...prev, newSpot]);
-    
     const updatedSpots = [...surfSpots, newSpot];
     localStorage.setItem('surfSpotterCustomSpots', JSON.stringify(updatedSpots.filter(spot => spot.createdBy)));
   };
@@ -107,11 +106,19 @@ function App() {
 
   const navigateToPhoto = (photo: Photo) => {
     setViewedPhotos(prev => new Set([...prev, photo.id]));
-    
+
     if (!user && viewedPhotos.size >= 2) {
       setShowOnboarding(true);
     }
-    
+
+    // ✅ Custom tracking: photo view
+    track('view_photo', {
+      photoId: photo.id,
+      title: photo.title || '',
+      spot: photo.spot || '',
+      user: user?.id || 'guest'
+    });
+
     setSelectedPhoto(photo);
     setCurrentPage('photo');
   };
@@ -126,7 +133,6 @@ function App() {
       const timer = setTimeout(() => {
         setShowOnboarding(true);
       }, 3 * 60 * 1000);
-
       return () => clearTimeout(timer);
     }
   }, [user]);
@@ -277,8 +283,6 @@ function App() {
         <UserOnboarding onComplete={handleOnboardingComplete} onSkip={handleOnboardingSkip} />
       )}
       {renderPage()}
-
-      {/* 👇 Analytics component added here */}
       <Analytics />
     </div>
   );
