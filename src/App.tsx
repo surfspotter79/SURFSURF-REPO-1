@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import React, { useState } from 'react';
 import { Camera, MapPin, Upload, Search, Filter, ShoppingCart, User, Waves as Wave } from 'lucide-react';
 import Navigation from './components/Navigation';
