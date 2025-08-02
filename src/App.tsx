@@ -31,7 +31,6 @@ function App() {
     photographer: ''
   });
 
-  // Handle creating new surf spot
   const handleCreateSurfSpot = (spotData: { name: string; coordinates: { lat: number; lng: number }; description: string }) => {
     const newSpot: SurfSpot = {
       id: Date.now().toString(),
@@ -45,12 +44,10 @@ function App() {
     
     setSurfSpots(prev => [...prev, newSpot]);
     
-    // Save to localStorage
     const updatedSpots = [...surfSpots, newSpot];
     localStorage.setItem('surfSpotterCustomSpots', JSON.stringify(updatedSpots.filter(spot => spot.createdBy)));
   };
 
-  // Handle creating new album
   const handleCreateAlbum = (surfSpotId: string, albumData: Omit<Album, 'id' | 'createdAt'>) => {
     const newAlbum: Album = {
       ...albumData,
@@ -58,10 +55,8 @@ function App() {
       createdAt: new Date().toISOString()
     };
 
-    // Add photos to main photos array
     setAllPhotos(prev => [...prev, ...newAlbum.photos]);
 
-    // Update surf spot with new album and photo count
     setSurfSpots(prev => prev.map(spot => {
       if (spot.id === surfSpotId) {
         const updatedAlbums = [...(spot.albums || []), newAlbum];
@@ -74,7 +69,6 @@ function App() {
       return spot;
     }));
 
-    // Save to localStorage
     localStorage.setItem('surfSpotterCustomAlbums', JSON.stringify([newAlbum]));
   };
 
@@ -89,11 +83,9 @@ function App() {
     const newPhotoLikes = { ...photoLikes };
 
     if (isLiked) {
-      // Unlike
       newLikedPhotos.delete(photoId);
       newPhotoLikes[photoId] = Math.max(0, (newPhotoLikes[photoId] || currentLikes) - 1);
     } else {
-      // Like
       newLikedPhotos.add(photoId);
       newPhotoLikes[photoId] = (newPhotoLikes[photoId] || currentLikes) + 1;
     }
@@ -101,13 +93,11 @@ function App() {
     setLikedPhotos(newLikedPhotos);
     setPhotoLikes(newPhotoLikes);
 
-    // Save to localStorage
     localStorage.setItem('surfSpotterLikedPhotos', JSON.stringify(Array.from(newLikedPhotos)));
     localStorage.setItem('surfSpotterPhotoLikes', JSON.stringify(newPhotoLikes));
   };
 
   const addToCart = (photo: Photo) => {
-    // Trigger onboarding when trying to purchase
     if (!user) {
       setShowOnboarding(true);
       return;
@@ -116,11 +106,9 @@ function App() {
   };
 
   const navigateToPhoto = (photo: Photo) => {
-    // Track viewed photos
     setViewedPhotos(prev => new Set([...prev, photo.id]));
     
-    // Trigger onboarding after viewing 3-5 photos
-    if (!user && viewedPhotos.size >= 2) { // size is 2 because we just added one
+    if (!user && viewedPhotos.size >= 2) {
       setShowOnboarding(true);
     }
     
@@ -133,12 +121,11 @@ function App() {
     setCurrentPage('browse');
   };
 
-  // Time-based onboarding trigger
   React.useEffect(() => {
     if (!user) {
       const timer = setTimeout(() => {
         setShowOnboarding(true);
-      }, 3 * 60 * 1000); // 3 minutes
+      }, 3 * 60 * 1000);
 
       return () => clearTimeout(timer);
     }
@@ -158,11 +145,9 @@ function App() {
 
   const handleOnboardingSkip = () => {
     setShowOnboarding(false);
-    // Set a flag to delay showing onboarding again
     localStorage.setItem('surfSpotterOnboardingSkipped', Date.now().toString());
   };
 
-  // Check if user exists and handle onboarding logic on app load
   React.useEffect(() => {
     const savedUser = localStorage.getItem('surfSpotterUser');
     const savedLikedPhotos = localStorage.getItem('surfSpotterLikedPhotos');
@@ -172,11 +157,9 @@ function App() {
     if (savedUser) {
       setUser(JSON.parse(savedUser));
     } else {
-      // Check if user recently skipped onboarding
       const skippedTime = localStorage.getItem('surfSpotterOnboardingSkipped');
       if (skippedTime) {
         const timeSinceSkip = Date.now() - parseInt(skippedTime);
-        // Don't show onboarding again for 24 hours after skipping
         if (timeSinceSkip < 24 * 60 * 60 * 1000) {
           return;
         }
@@ -294,6 +277,9 @@ function App() {
         <UserOnboarding onComplete={handleOnboardingComplete} onSkip={handleOnboardingSkip} />
       )}
       {renderPage()}
+
+      {/* 👇 Analytics component added here */}
+      <Analytics />
     </div>
   );
 }
