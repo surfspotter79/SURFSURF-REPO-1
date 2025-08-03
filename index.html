@@ -26,12 +26,17 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8YBC63GN6D"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
+<<<<<<< HEAD
       function gtag() { dataLayer.push(arguments); }
+=======
+      function gtag(){ dataLayer.push(arguments); }
+>>>>>>> 93a278c (Fix Vite build + index.html root)
       gtag('js', new Date());
       gtag('config', 'G-8YBC63GN6D');
     </script>
 
     <!-- Styles (optional) -->
+<<<<<<< HEAD
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
@@ -39,5 +44,14 @@
 
     <!-- ✅ Vite-compatible entry point -->
     <script type="module" src="/src/main.tsx"></script>
+=======
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <!-- Main script -->
+    <script src="bundle.js"></script>
+>>>>>>> 93a278c (Fix Vite build + index.html root)
   </body>
 </html>
