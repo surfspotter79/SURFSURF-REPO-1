@@ -26,18 +26,18 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8YBC63GN6D"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){ dataLayer.push(arguments); }
+      function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
       gtag('config', 'G-8YBC63GN6D');
     </script>
 
     <!-- Styles (optional) -->
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
-    <div id="app"></div>
+    <div id="root"></div>
 
-    <!-- Main script -->
-    <script src="bundle.js"></script>
+    <!-- ✅ Vite-compatible entry point -->
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
