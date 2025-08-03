@@ -1,29 +1,50 @@
-<!-- public/index.html -->
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>SurfSpotter – En construction</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-      body {
-        font-family: sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        margin: 0;
-        background: #f5f5f5;
-        text-align: center;
+
+    <!-- SEO -->
+    <title>SurfSpotter – Epic Surf Photography Platform</title>
+    <meta
+      name="description"
+      content="Discover the world's most stunning surf photography from top spots. Upload, explore, and get inspired by wave-riding moments."
+    />
+    <meta name="robots" content="noindex, nofollow" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="SurfSpotter – Epic Surf Photography Platform" />
+    <meta property="og:description" content="Explore the best surf photography worldwide." />
+    <meta property="og:image" content="https://www.surfspotter.app/og-cover.jpg" />
+    <meta property="og:url" content="https://www.surfspotter.app" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SurfSpotter – Epic Surf Photography Platform" />
+    <meta name="twitter:description" content="Discover epic surf moments from around the world." />
+    <meta name="twitter:image" content="https://www.surfspotter.app/og-cover.jpg" />
+
+    <!-- Google Analytics 4 (facultatif pour développement) -->
+    <!--
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8YBC63GN6D"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
       }
-      h1 { color: #0d47a1; }
-      a { color: #0d47a1; text-decoration: none; margin-top: 1rem; display: inline-block; }
-    </style>
+      gtag("js", new Date());
+      gtag("config", "G-8YBC63GN6D");
+    </script>
+    -->
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
-    <h1>SurfSpotter arrive bientôt 🌊</h1>
-    <p>La plateforme de photos de surf est en cours de développement.</p>
-    <a href="/internal/">Accéder au site en développement</a>
+    <div id="root"></div>
+
+    <!-- Main React Entry -->
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
