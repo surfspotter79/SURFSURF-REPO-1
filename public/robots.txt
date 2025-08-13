@@ -1,4 +1,9 @@
+# Allow everything except the private workbench
 User-agent: *
-Allow: /
+Disallow: /work
+
+# Optional: disallow Next.js build output (if accidentally exposed)
+Disallow: /_next
+Disallow: /api
 
 Sitemap: https://www.surfspotter.app/sitemap.xml
