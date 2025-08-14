@@ -3,8 +3,5 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/internal/',
-  build: {
-    outDir: 'dist/internal'
-  }
+  base: '/internal/',   // <- important so /app works in production
 })
