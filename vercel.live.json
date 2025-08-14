@@ -1,0 +1,10 @@
+{
+  "rewrites": [
+    { "source": "/work", "destination": "/api/work" },
+
+    { "source": "/", "destination": "/internal/index.html" },
+    { "source": "/:path*", "destination": "/internal/index.html" },
+
+    { "source": "/preview", "destination": "/internal/maintenance.html" }
+  ]
+}

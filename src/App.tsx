@@ -200,6 +200,7 @@ function App() {
             onExplore={() => setCurrentPage('browse')} 
             onSearch={handleSearch}
             onAboutClick={() => setCurrentPage('about')} 
+            onUploadClick={() => setCurrentPage('upload')} 
             user={user}
             onTriggerOnboarding={triggerOnboarding}
             surfSpots={surfSpots}
