@@ -23,12 +23,17 @@ interface LandingPageProps {
   onLikePhoto: (photoId: string, currentLikes: number) => void;
   likedPhotos: Set<string>;
   photoLikes: Record<string, number>;
+
+  /** NEW (optional) */
+  onUploadClick?: () => void;
 }
+
 
 const LandingPage: React.FC<LandingPageProps> = ({ 
   onExplore, 
   onSearch, 
-  onAboutClick, 
+  onAboutClick,
+  onUploadClick, 
   user, 
   onTriggerOnboarding,
   surfSpots,
@@ -53,6 +58,9 @@ const LandingPage: React.FC<LandingPageProps> = ({
       .sort((a, b) => (photoLikes[b.id] || b.likes || 0) - (photoLikes[a.id] || a.likes || 0))
       [0];
   };
+const featuredPhoto = getTodaysFeaturedPhoto();
+const heroUrl =
+  featuredPhoto?.imageUrl ?? new URL('/hero/hero.jpg', import.meta.env.BASE_URL).href;
 
   // Get location-based photos for the ribbon
   const getLocationPhotos = () => {
@@ -139,7 +147,7 @@ const LandingPage: React.FC<LandingPageProps> = ({
       <section 
         className="relative h-screen flex items-center justify-center"
         style={{
-          backgroundImage: 'url("/mikey-february-natural-selection-surf-practice-day.jpeg")',
+          backgroundImage: `url("${heroUrl}")`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed'
@@ -154,12 +162,25 @@ const LandingPage: React.FC<LandingPageProps> = ({
           <p className="text-xl md:text-2xl mb-8 opacity-90">
             Discover the world's most stunning surf photography from legendary breaks
           </p>
-          <button
-            onClick={onExplore}
-            className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all transform hover:scale-105 shadow-2xl"
-          >
-            Explore Photos
-          </button>
+          {/* Buttons */}
+<div className="mt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+  <button
+    onClick={onExplore}
+    className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all transform hover:scale-105 shadow-2xl"
+  >
+    Explore Photos
+  </button>
+
+  {onUploadClick && (
+    <button
+      onClick={onUploadClick}
+      className="bg-white/90 hover:bg-white text-orange-600 px-8 py-4 rounded-full text-lg font-semibold transition-all shadow-2xl border border-white/40"
+    >
+      Upload your shot
+    </button>
+  )}
+</div>
+
         </div>
         
         {/* Scroll indicator */}
@@ -368,104 +389,116 @@ const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* 8. SEARCH & FILTERS - Advanced discovery */}
-      <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Find Your Perfect Shot
-            </h2>
-            <p className="text-xl text-gray-600">
-              Search by location, photographer, or surf spot
-            </p>
-          </div>
-          
-          <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-8 shadow-lg">
-            {/* Search Bar */}
-            <div className="relative mb-6">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search for surf spots, locations, or photographers..."
-                className="w-full pl-12 pr-4 py-4 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-lg"
-              />
-            </div>
+<section className="py-16 bg-white">
+  <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-8">
+      <h2 className="text-3xl font-bold text-gray-900 mb-4">
+        Find Your Perfect Shot
+      </h2>
+      <p className="text-xl text-gray-600">
+        Search by location, photographer, or surf spot
+      </p>
+    </div>
 
-            {/* Filter Row */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-              <div className="relative">
-                <select 
-                  value={selectedLocation}
-                  onChange={(e) => handleLocationChange(e.target.value)}
-                  className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="">Any Location</option>
-                  {surfSpots.map((spot) => (
-                    <option key={spot.id} value={spot.name}>
-                      {spot.name}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
-              </div>
+    {/* CHANGED: div → form, call your handler on submit */}
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSearchClick();
+      }}
+      className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-8 shadow-lg"
+    >
+      {/* Search Bar */}
+      <div className="relative mb-6">
+        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+        <input
+          type="text"
+          placeholder="Search for surf spots, locations, or photographers..."
+          className="w-full pl-12 pr-4 py-4 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-lg"
+          /* CHANGED: bind to selectedLocation so Enter submits with it */
+          value={selectedLocation}
+          onChange={(e) => handleLocationChange(e.target.value)}
+        />
+      </div>
 
-              <div className="relative">
-                <select 
-                  value={selectedSpot}
-                  onChange={(e) => setSelectedSpot(e.target.value)}
-                  className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="">Any Surf Spot</option>
-                  {surfSpots.map((spot) => (
-                    <option key={spot.id} value={spot.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}>
-                      {spot.name}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
-              </div>
-
-              <div className="relative">
-                <select 
-                  value={selectedDateRange}
-                  onChange={(e) => setSelectedDateRange(e.target.value)}
-                  className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="">Any Date</option>
-                  <option value="today">Today</option>
-                  <option value="week">This Week</option>
-                  <option value="month">This Month</option>
-                  <option value="year">This Year</option>
-                </select>
-                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
-              </div>
-
-              <div className="relative">
-                <select 
-                  value={selectedPhotographer}
-                  onChange={(e) => setSelectedPhotographer(e.target.value)}
-                  className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="">Any Photographer</option>
-                  {topPhotographers.map((photographer) => (
-                    <option key={photographer.name} value={photographer.name}>
-                      {photographer.name}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
-              </div>
-            </div>
-
-            <button
-              onClick={handleSearchClick}
-              className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-6 py-4 rounded-lg font-semibold transition-all flex items-center justify-center space-x-2 text-lg"
-            >
-              <Search className="h-5 w-5" />
-              <span>Search Epic Photos</span>
-            </button>
-          </div>
+      {/* Filter Row (unchanged) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="relative">
+          <select 
+            value={selectedLocation}
+            onChange={(e) => handleLocationChange(e.target.value)}
+            className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="">Any Location</option>
+            {surfSpots.map((spot) => (
+              <option key={spot.id} value={spot.name}>
+                {spot.name}
+              </option>
+            ))}
+          </select>
+          <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
         </div>
-      </section>
+
+        <div className="relative">
+          <select 
+            value={selectedSpot}
+            onChange={(e) => setSelectedSpot(e.target.value)}
+            className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="">Any Surf Spot</option>
+            {surfSpots.map((spot) => (
+              <option key={spot.id} value={spot.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}>
+                {spot.name}
+              </option>
+            ))}
+          </select>
+          <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+        </div>
+
+        <div className="relative">
+          <select 
+            value={selectedDateRange}
+            onChange={(e) => setSelectedDateRange(e.target.value)}
+            className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="">Any Date</option>
+            <option value="today">Today</option>
+            <option value="week">This Week</option>
+            <option value="month">This Month</option>
+            <option value="year">This Year</option>
+          </select>
+          <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+        </div>
+
+        <div className="relative">
+          <select 
+            value={selectedPhotographer}
+            onChange={(e) => setSelectedPhotographer(e.target.value)}
+            className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="">Any Photographer</option>
+            {topPhotographers.map((photographer) => (
+              <option key={photographer.name} value={photographer.name}>
+                {photographer.name}
+              </option>
+            ))}
+          </select>
+          <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+        </div>
+      </div>
+
+      {/* CHANGED: type="submit" */}
+      <button
+        type="submit"
+        className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-6 py-4 rounded-lg font-semibold transition-all flex items-center justify-center space-x-2 text-lg"
+      >
+        <Search className="h-5 w-5" />
+        <span>Search Epic Photos</span>
+      </button>
+    </form>
+  </div>
+</section>
+
 
       {/* 9. MAJOR SURF EVENTS */}
       <section className="py-16 bg-yellow-300">
