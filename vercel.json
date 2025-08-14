@@ -2,7 +2,7 @@
   "rewrites": [
     { "source": "/work", "destination": "/api/work" },
     { "source": "/", "destination": "/maintenance.html" },
-    { "source": "/app", "destination": "/index.html" },
-    { "source": "/app/:path*", "destination": "/index.html" }
+    { "source": "/app", "destination": "/internal/index.html" },
+    { "source": "/app/:path*", "destination": "/internal/index.html" }
   ]
 }
