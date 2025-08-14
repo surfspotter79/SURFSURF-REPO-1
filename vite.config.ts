@@ -3,5 +3,9 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/internal/',   // <- important so /app works in production
+  base: '/internal/',                 // we serve the app under /internal
+  build: {
+    outDir: 'dist/internal',          // put index.html at dist/internal/index.html
+    copyPublicDir: true               // copy everything from /public into dist/internal
+  }
 })
